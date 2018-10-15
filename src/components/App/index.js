@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
-import CellMap from '../CellMap'
+import CellMap from '../Playground'
 
-import './App.css';
+import './App.scss';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <CellMap row={5} column={10} />
+        <CellMap row={5} column={15} />
       </div>
     );
   }
