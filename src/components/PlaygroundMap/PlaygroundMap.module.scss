@@ -1,0 +1,11 @@
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  .row {
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+
+  }
+}

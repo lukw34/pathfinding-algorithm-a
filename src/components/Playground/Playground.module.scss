@@ -1,13 +1,14 @@
 .container {
-    .map {
-        align-items: center;
+    display: flex;
+    flex-direction: column;
+    .buttons {
         display: flex;
-        flex-direction: column;
-        .row {
-            align-items: stretch;
-            display: flex;
-            flex-direction: row;
-            
+        justify-content: space-around;
+        padding: 20px;
+        button {
+            cursor: pointer;
+            font-size: 1.5rem;
+            padding: 10px 50px;
         }
     }
 
