@@ -112,7 +112,7 @@ export const getPlaygroundWithPathFrom = (playground, start) => {
 
   getAncestor(start);
   return playgroundWithPath;
-}
+};
 
 export const getSurroundings = (x, y, maxRow, maxColumn) => {
   const surroundingPoints = [{
@@ -129,5 +129,16 @@ export const getSurroundings = (x, y, maxRow, maxColumn) => {
     y: y - 1
   }];
 
-  return surroundingPoints.filter(({ x, y }) => x > -1 && y > -1 && x < maxRow && y < maxColumn);
+  return surroundingPoints.filter(({ x: xToCheck, y: yToCheck }) => xToCheck > -1 && yToCheck > -1 && xToCheck < maxRow && yToCheck < maxColumn);
 };
+
+
+export const findMinWeightElement = openList => Object.keys(openList)
+  .map(key => openList[key])
+  .reduce((prev, curr) => {
+    if (prev.weight > curr.weight) {
+      return curr;
+    }
+
+    return prev;
+  }, { weight: Infinity });

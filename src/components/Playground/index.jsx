@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 
 import PlaygroundMap from '../PlaygroundMap';
 import styles from './Playground.module.scss';
-import { CLOSED } from '../../constants';
+import { CLOSED, TIMESTAMP, DIRECT_MOVE } from '../../constants';
 import {
   initPlayground,
   getPlaygroundWithPathFrom,
-  getSurroundings
+  getSurroundings,
+  findMinWeightElement
 } from '../../utils/helper';
 
 class Playground extends React.PureComponent {
   state = {
     playground: [[]],
     startPoint: {},
-    directMove: 10,
     startDisabled: true
   };
 
@@ -38,7 +38,7 @@ class Playground extends React.PureComponent {
     this.setState({
       startDisabled: true
     });
-    const { playground, startPoint, directMove } = this.state;
+    const { playground, startPoint } = this.state;
     const { row, column } = this.props;
     const openList = [];
     const closedList = [startPoint];
@@ -77,15 +77,7 @@ class Playground extends React.PureComponent {
       setTimeout(() => {
         const {
           x: minX, y: minY, move: minMove, ancestor: minAncestor
-        } = Object.keys(openList)
-          .map(key => openList[key])
-          .reduce((prev, curr) => {
-            if (prev.weight > curr.weight) {
-              return curr;
-            }
-
-            return prev;
-          }, { weight: Infinity });
+        } = findMinWeightElement(openList);
 
         delete openList[`${minX}_${minY}`];
 
@@ -104,7 +96,7 @@ class Playground extends React.PureComponent {
         closedList.push({
           x: minX,
           y: minY,
-          move: directMove + minMove
+          move: DIRECT_MOVE + minMove
         });
         this.setState({
           playground: [...playground]
@@ -115,7 +107,7 @@ class Playground extends React.PureComponent {
         } else {
           step();
         }
-      }, 250);
+      }, TIMESTAMP);
     };
 
     step();

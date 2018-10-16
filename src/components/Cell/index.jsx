@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { pure } from 'recompose';
 
 import styles from './Cell.module.scss';
 import { PATH } from '../../constants';
@@ -14,6 +15,7 @@ const Cell = ({ type, distance, weight }) => (
   </div>
 );
 
+
 Cell.propTypes = {
   type: PropTypes.string.isRequired,
   distance: PropTypes.number,
@@ -25,4 +27,4 @@ Cell.defaultProps = {
   weight: null
 };
 
-export default Cell;
+export default pure(Cell);

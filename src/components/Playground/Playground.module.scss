@@ -3,12 +3,13 @@
     flex-direction: column;
     .buttons {
         display: flex;
-        justify-content: space-around;
+        justify-content: left;
         padding: 20px;
         button {
             cursor: pointer;
             font-size: 1.5rem;
             padding: 10px 50px;
+            margin: 0 50px;
         }
     }
 

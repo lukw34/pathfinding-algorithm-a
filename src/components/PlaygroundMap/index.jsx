@@ -14,10 +14,6 @@ const PlaygroundMap = ({ playground }) => (
             <Cell
               key={`${row}_${column}`}
               {...cell}
-              position={{
-                row,
-                column
-              }}
             />))}
         </div>
       ))

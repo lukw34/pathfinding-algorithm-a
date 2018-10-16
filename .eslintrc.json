@@ -8,9 +8,13 @@
     "react",
     "jsx-a11y"
   ],
+  "globals": {
+    "document": true
+  },
   "rules": {
     "max-len": [0],
     "eol-last": [0],
+    "react/jsx-filename-extension": [0],
     "comma-dangle": [0],
     "react/no-array-index-key": [0],
     "import/no-extraneous-dependencies": ["warn", {"devDependencies": true}],
