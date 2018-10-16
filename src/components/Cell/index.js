@@ -1,22 +1,28 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import styles from './Cell.module.scss'
+import styles from './Cell.module.scss';
 import { PATH } from '../../constants';
 
-class Cell extends React.Component {
+const Cell = ({ type, distance, weight }) => (
+    <div className={`${styles.container} ${styles[type]}`}>
+        {
+            type !== PATH && <span className={styles.distance}>{distance}</span>
+        }
+        <span className={styles.weight}>{weight}</span>
 
-    render() {
-        const { type, distance, weight } = this.props;
-        return (
-            <div className={`${styles.container} ${styles[type]}`}>
-                {
-                    type !== PATH && <span className={styles.distance}>{distance}</span>
-                }
-                <span className={styles.weight}>{weight}</span>
+  </div>
+);
 
-            </div>
-        )    
-    }
-}
+Cell.propTypes = {
+    type: PropTypes.string.isRequired,
+    distance: PropTypes.number,
+    weight: PropTypes.number
+};
+
+Cell.defaultProps = {
+    distance: null,
+    weight: null
+};
 
 export default Cell;
