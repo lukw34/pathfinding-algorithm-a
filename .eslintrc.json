@@ -9,7 +9,8 @@
     "jsx-a11y"
   ],
   "globals": {
-    "document": true
+    "document": true,
+    "window": true
   },
   "rules": {
     "max-len": [0],

@@ -10,7 +10,7 @@ const Cell = ({ type, distance, weight }) => (
     {
       type !== PATH && <span className={styles.distance}>{distance}</span>
     }
-    <span className={styles.weight}>{weight}</span>
+    <span className={styles.weight}>{ weight !== 0 && weight }</span>
 
   </div>
 );

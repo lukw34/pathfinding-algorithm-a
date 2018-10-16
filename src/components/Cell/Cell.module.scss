@@ -15,17 +15,19 @@
 
 
     &.path {
-        background-color: darkorange;
-
+        background-color: green;
         &::after {
-            border: green solid 2px;
-            background-color: green;
+            border: white solid 2px;
+            background-color: white;
             border-radius: 50%;
             content: " ";
             width: 15px;
             height: 15px;
             margin-top: 15px;
             margin-left: 15px;
+        }
+        &::before {
+            content: " "
         }
     }
 

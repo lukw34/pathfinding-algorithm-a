@@ -1,5 +1,5 @@
 import {
-  DEFAULT, OBSTACLE, START_POINT, TARGET, PATH
+  DEFAULT, OBSTACLE, START_POINT, TARGET, PATH, DIRECT_MOVE, CROSS_MOVE
 } from '../constants';
 
 export const generateDefaultArray = size => Array.from(new Array(size), () => ({
@@ -115,9 +115,9 @@ export const getPlaygroundWithPathFrom = (playground, start) => {
 };
 
 export const getSurroundings = (x, y, maxRow, maxColumn) => {
-  const surroundingPoints = [{
+  const directSurroundingPoints = [{
     x: x + 1,
-    y
+    y,
   }, {
     x,
     y: y + 1
@@ -127,9 +127,30 @@ export const getSurroundings = (x, y, maxRow, maxColumn) => {
   }, {
     x,
     y: y - 1
-  }];
+  }].map(el => ({
+    ...el,
+    cost: DIRECT_MOVE
+  }));
 
-  return surroundingPoints.filter(({ x: xToCheck, y: yToCheck }) => xToCheck > -1 && yToCheck > -1 && xToCheck < maxRow && yToCheck < maxColumn);
+  const crossSurroundingPoints = [{
+    x: x + 1,
+    y: y + 1,
+  }, {
+    x: x - 1,
+    y: y + 1
+  }, {
+    x: x + 1,
+    y: y - 1
+  }, {
+    x: x - 1,
+    y: y - 1
+  }].map(el => ({
+    ...el,
+    cost: CROSS_MOVE
+  }));
+
+  return [...directSurroundingPoints, ...crossSurroundingPoints]
+    .filter(({ x: xToCheck, y: yToCheck }) => xToCheck > -1 && yToCheck > -1 && xToCheck < maxRow && yToCheck < maxColumn);
 };
 
 

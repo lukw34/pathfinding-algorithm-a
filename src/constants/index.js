@@ -5,6 +5,7 @@ export const START_POINT = 'start-point';
 export const PATH = 'path';
 export const CLOSED = 'closed';
 
-export const TIMESTAMP = 200;
+export const TIMESTAMP = 125;
 
-export const DIRECT_MOVE = 10;
+export const DIRECT_MOVE = 8;
+export const CROSS_MOVE = 11;

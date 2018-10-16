@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import PlaygroundMap from '../PlaygroundMap';
 import styles from './Playground.module.scss';
-import { CLOSED, TIMESTAMP, DIRECT_MOVE } from '../../constants';
+import { CLOSED, TIMESTAMP } from '../../constants';
 import {
   initPlayground,
   getPlaygroundWithPathFrom,
@@ -45,16 +45,17 @@ class Playground extends React.PureComponent {
     const step = () => {
       const [point] = closedList.slice(-1);
       const candidateOpenList = getSurroundings(point.x, point.y, row, column);
-      candidateOpenList.forEach(({ x, y }) => {
+      candidateOpenList.forEach(({ x, y, cost }) => {
         const el = playground[x][y];
 
         if (el && el.weight !== null) {
           const move = point.move || 0;
-          const weight = el.distance + move;
+          const weight = el.distance + move + cost;
           if (el.weight === 0 || weight < el.weight) {
             openList[`${x}_${y}`] = {
               x,
               y,
+              cost,
               weight,
               ancestor: {
                 x: point.x,
@@ -74,9 +75,9 @@ class Playground extends React.PureComponent {
         playground: [...playground]
       });
 
-      setTimeout(() => {
+      this.stepTimeout = setTimeout(() => {
         const {
-          x: minX, y: minY, move: minMove, ancestor: minAncestor
+          x: minX, y: minY, move: minMove, ancestor: minAncestor, cost: minCost
         } = findMinWeightElement(openList);
 
         delete openList[`${minX}_${minY}`];
@@ -96,7 +97,7 @@ class Playground extends React.PureComponent {
         closedList.push({
           x: minX,
           y: minY,
-          move: DIRECT_MOVE + minMove
+          move: minCost + minMove
         });
         this.setState({
           playground: [...playground]
@@ -117,6 +118,10 @@ class Playground extends React.PureComponent {
     const { row, column = row, obstaclesCount = 10 } = this.props;
     const { playground, startPoint } = initPlayground(row, column, obstaclesCount);
 
+    if (this.stepTimeout) {
+      clearTimeout(this.stepTimeout);
+    }
+
     this.setState({
       playground,
       startPoint,
@@ -124,13 +129,13 @@ class Playground extends React.PureComponent {
     });
   };
 
-
   printPath(start) {
     const { playground } = this.state;
     this.setState({
       playground: getPlaygroundWithPathFrom(playground, start)
     });
   }
+
 
   render() {
     const { playground, startDisabled } = this.state;
